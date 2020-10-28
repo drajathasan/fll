@@ -30,7 +30,7 @@ define('DB_ACCESS', 'fa');
 
 if (!defined('SB')) {
   // main system configuration
-  require '../../../sysconfig.inc.php';
+  require '../../../../sysconfig.inc.php';
   // start the session
   require SB.'admin/default/session.inc.php';
 }
@@ -68,7 +68,7 @@ if (!$can_read) {
     <div class="sub_section">
 	<div class="btn-group">
 	</div>
-    <form name="search" action="<?php echo MWB; ?>membership/add_essay.php" id="search" method="get" style="display: inline;"><?php echo __('Member Search'); ?> :
+    <form name="search" action="<?php echo MWB; ?>membership/fll/add_essay.php" id="search" method="get" style="display: inline;"><?php echo __('Member Search'); ?> :
 	    <input type="text" name="keywords" size="30" /><?php if (isset($_GET['expire'])) { echo '<input type="hidden" name="expire" value="true" />'; } ?>
 	    <input type="submit" id="doSearch" value="<?php echo __('Search'); ?>" class="button" />
 	</form>
@@ -136,9 +136,9 @@ if (isset($_GET['keywords']) AND $_GET['keywords']) {
     //$str_input .= ' &nbsp; <span id="msgBox">&nbsp;</span>';
     //$form->addAnything(__('Member ID').'', $str_input);
     // member name
-    $form->addTextField('text', 'memberID', __('Member ID').'', $rec_d['member_id'], 'style="width: 30%;"');
+    $form->addTextField('text', 'memberID', __('Member ID').'', $rec_d['member_id'], 'autofocus style="width: 30%;"');
     $form->addTextField('text', 'memberName', __('Member Name').'', $rec_d['member_name'], 'style="width: 100%;"');
-    $form->addTextField('text', 'memberEssay', __('Judul Skripsi').'', $rec_d['member_essay'], 'autofocus style="width: 100%;"');
+    $form->addTextField('textarea', 'memberEssay', __('Judul Skripsi').'', $rec_d['member_essay'], 'style="width: 100%; margin-top: 0px; margin-bottom: 0px; height: 162px;"');
     echo $form->printOut();
 
     // Update Data
@@ -160,6 +160,6 @@ if (isset($_GET['keywords']) AND $_GET['keywords']) {
       print('<div class="infoBox"><font style="color: #f00">Tidak ditemukan Id Anggota dengan nomor&nbsp; : '.$_GET['keywords'].'</font></div>');
     }
 } else {
-  echo '<div class="infoBox"><font style="color: #f00">Tidak Ada Data</font></div>';
+  echo '<div class="infoBox"><font style="color: #f00">Masukan ID Anggota pada kotak pencarian, untuk menambahkan data</font></div>';
 }
 /* main content end */

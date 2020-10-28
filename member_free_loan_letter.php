@@ -25,7 +25,7 @@
 define('INDEX_AUTH', '1');
 
 // main system configuration
-require '../../../sysconfig.inc.php';
+require '../../../../sysconfig.inc.php';
 // IP based access limitation
 require LIB.'ip_based_access.inc.php';
 do_checkIP('smc');
@@ -108,27 +108,28 @@ if (isset($_POST['itemID']) AND !empty($_POST['itemID']) AND isset($_POST['itemA
 
 
 function reseter(){
-$handle = fopen('../../../files/freeloan/loanquee.txt', "r");
+$handle = fopen(MDLBS.'membership/fll/loanquee.txt', "r");
   if(!$handle){
     utility::jsAlert(__('File Not Found!'));
   } else {
     $counter = (int) fread($handle,20);
     fclose ($handle);
     $counter++;
-    $handle = fopen('../../../files/freeloan/loanquee.txt', "w");
+    $handle = fopen(MDLBS.'membership/fll/loanquee.txt', "w");
     fwrite($handle,"0") ;
     fclose ($handle) ;  
   }
 }
 
-$show = fopen("../../../files/freeloan/loanquee.txt", "r");
-  if (!$show) {
+$show = fopen(MDLBS.'membership/fll/loanquee.txt', "r");
+if (!$show) {
     utility::jsAlert(__('Can not read file!'));
-  } else {
-    $see = (int ) fread($show,20);
+} else {
+    $see = (int)fread($show,20);
     $seepp = $see+1;
     $sysconf['number'] = substr('0000'.$seepp,-3,3);
-  } 
+} 
+
 // Reset
 if (isset($_GET['action']) AND $_GET['action'] == 'reset') {
     reseter();
@@ -140,7 +141,7 @@ if (isset($_GET['action']) AND $_GET['action'] == 'print') {
     // update print queue count object
     echo '<script type="text/javascript">parent.$(\'#queueCount\').html(\'0\');</script>';
     // open result in window
-    echo '<script type="text/javascript">top.jQuery.colorbox({href: "'.MWB.'/membership/member_free_loan_letter_pdfgen.php", iframe: true, width: 800, height: 500, title: "'.__('Free Loan Letter Printing').'"})</script>';
+    echo '<script type="text/javascript">top.jQuery.colorbox({href: "'.MWB.'/membership/fll/member_free_loan_letter_pdfgen.php", iframe: true, width: 800, height: 500, title: "'.__('Free Loan Letter Printing').'"})</script>';
     exit();
 }
 
@@ -152,12 +153,12 @@ if (isset($_GET['action']) AND $_GET['action'] == 'print') {
     </div>
 	<div class="sub_section">
 		<div class="btn-group">
-		<a target="blindSubmit" href="<?php echo MWB; ?>membership/member_free_loan_letter.php?action=clear" class="notAJAX btn btn-default" style="color: #f00;"><i class="glyphicon glyphicon-trash"></i>&nbsp;<?php echo __('Clear Print Queue'); ?></a>
-		<a target="blindSubmit" href="<?php echo MWB; ?>membership/member_free_loan_letter.php?action=print" class="notAJAX btn btn-default"><i class="glyphicon glyphicon-print"></i>&nbsp;<?php echo __('Cetak Surat Bebas Peminjaman'); ?></a>
-		<a target="blindSubmit" href="<?php echo MWB; ?>membership/member_free_loan_letter.php?action=reset" class="notAJAX btn btn-default" style="color: #f00;"><i class="glyphicon glyphicon-trash"></i>&nbsp;<?php echo __('Reset Nomor'); ?></a>
-        <a href="<?php echo MWB; ?>bibliography/pop_print_settings.php?type=freeloan" class="notAJAX btn btn-default openPopUp" title="<?php echo __('Setelan Surat Bebas Peminjaman'); ?>"><i class="glyphicon glyphicon-wrench"></i></a>
+		<a target="blindSubmit" href="<?php echo MWB; ?>membership/fll/member_free_loan_letter.php?action=clear" class="notAJAX btn btn-default" style="color: #f00;"><i class="glyphicon glyphicon-trash"></i>&nbsp;<?php echo __('Clear Print Queue'); ?></a>
+		<a target="blindSubmit" href="<?php echo MWB; ?>membership/fll/member_free_loan_letter.php?action=print" class="notAJAX btn btn-default"><i class="glyphicon glyphicon-print"></i>&nbsp;<?php echo __('Cetak Surat Bebas Peminjaman'); ?></a>
+		<a target="blindSubmit" href="<?php echo MWB; ?>membership/fll/member_free_loan_letter.php?action=reset" class="notAJAX btn btn-default" style="color: #f00;"><i class="glyphicon glyphicon-trash"></i>&nbsp;<?php echo __('Reset Nomor'); ?></a>
+        <a href="<?php echo MWB; ?>membership/fll/pop_print_settings.php?type=freeloan" class="notAJAX btn btn-default openPopUp" title="<?php echo __('Setelan Surat Bebas Peminjaman'); ?>"><i class="glyphicon glyphicon-wrench"></i></a>
     </div>
-	    <form name="search" action="<?php echo MWB; ?>membership/member_free_loan_letter.php" id="search" method="get" style="display: inline;"><?php echo __('Search'); ?>:
+	    <form name="search" action="<?php echo MWB; ?>membership/fll/member_free_loan_letter.php" id="search" method="get" style="display: inline;"><?php echo __('Search'); ?>:
 	    <input type="text" name="keywords" size="30" />
 	    <input type="submit" id="doSearch" value="<?php echo __('Search'); ?>" class="button" />
 	    </form>

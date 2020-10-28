@@ -20,28 +20,28 @@
  */
 define('INDEX_AUTH', '1');
 
-require '../../../sysconfig.inc.php';
-require LIB.'fpdf/fpdfpp.php';
+require '../../../../sysconfig.inc.php';
+require MDLBS.'membership/fll/fpdf/fpdfpp.php';
 require SB.'admin/default/session.inc.php';
 require SB.'admin/default/session_check.inc.php';
 
 // Function to show number on letter
 function counter(){
-$handle = fopen('../../../files/freeloan/loanquee.txt', "r");
+$handle = fopen(MDLBS.'membership/fll/loanquee.txt', "r");
   if(!$handle){
     utility::jsAlert(__('File Not Found!'));
   } else {
     $counter = (int) fread($handle,20);
     fclose ($handle);
     $counter++;
-    $handle = fopen('../../../files/freeloan/loanquee.txt', "w");
+    $handle = fopen(MDLBS.'membership/fll/loanquee.txt', "w");
     fwrite($handle,$counter) ;
     fclose ($handle) ;  
   }
 }
 
 // include printed settings configuration file
-include SB.'admin'.DS.'admin_template'.DS.'printed_settings.inc.php';
+include MDLBS.'membership/fll/printed_settings.inc.php';
 // load print settings from database to override value from printed_settings file
 loadPrintSettings($dbs, 'freeloan');
 
@@ -77,7 +77,7 @@ while ($member_d = $member_q->fetch_assoc()) {
     }
 }
 
-$show = fopen(SB.'files/freeloan/loanquee.txt', "r");
+$show = fopen(MDLBS.'membership/fll/loanquee.txt', "r");
 if (!$show) {
 	utility::jsAlert(__('Can not read file! loanquee.txt'));
 	exit();
@@ -90,7 +90,7 @@ $pdf = new PDFPP();
 foreach ($chunked_card_arrays as $membercard_rows) {
 	foreach ($membercard_rows as $card) {
 		// Get num
-		$number            = file_get_contents(SB.'files/freeloan/loanquee.txt');
+		$number            = (int)file_get_contents(MDLBS.'membership/fll/loanquee.txt');
 		if ($number == 0) {
 			$number = $number + 1;
 		}
@@ -98,7 +98,7 @@ foreach ($chunked_card_arrays as $membercard_rows) {
 		/* Add page*/
 		$pdf->AddPage();
 		/* Header */
-		$pdf->Image(SB.'files'.DS.'freeloan'.DS.'.$sysconf['print']['freeloan']['logo_surat'], 27, 10,-180);
+		$pdf->Image(MDLBS.'membership/fll/freeloan/'.$sysconf['print']['freeloan']['logo_surat'], 27, 10,-180);
 		$pdf->Ln(35);
 		$pdf->SetFont('Arial','U',14);
 		$pdf->Cell(190,3, $sysconf['print']['freeloan']['caption_letter'],0,1,'C');
@@ -121,9 +121,9 @@ foreach ($chunked_card_arrays as $membercard_rows) {
 		$pdf->Cell(120,10,$card['member_id'], 0, '', 'L');
 		$pdf->Ln();
 		$pdf->Cell(25,5,'',0);
-		$pdf->Cell(30,10,'Kelas', 0, '', 'L');
+		$pdf->Cell(30,10,'Judul', 0, '', 'L');
 		$pdf->Cell(5,10,':',0, '', 'C');
-		$pdf->Cell(120,10,$card['inst_name'], 0, '', 'L');
+		$pdf->Cell(120,10,$card['member_essay'], 0, '', 'L');
 		$pdf->Ln(13);
 		$pdf->Cell(24,5,'',0);
 		$pdf->MultiCell(145,6,$sysconf['print']['freeloan']['result_letter'],0);
@@ -142,7 +142,7 @@ foreach ($chunked_card_arrays as $membercard_rows) {
 		$pdf->Cell(70,5,$sysconf['print']['freeloan']['id_of_signature'],0,1,'L');
 		// add next num
 		$next_num = $number + 1;
-		file_put_contents(SB.'files/freeloan/loanquee.txt', $next_num);
+		file_put_contents(MDLBS.'membership/fll/loanquee.txt', $next_num);
 	}
 }
 // Auto print

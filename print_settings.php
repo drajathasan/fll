@@ -28,7 +28,7 @@ define('DB_ACCESS', 'fa');
 
 if (!defined('SB')) {
   // main system configuration
-  require '../../../sysconfig.inc.php';
+  require '../../../../sysconfig.inc.php';
   // start the session
   require SB.'admin/default/session.inc.php';
 }
@@ -61,17 +61,12 @@ if (isset($_GET['type'])) {
   $type = trim($_GET['type']);
 }
 
-if (!in_array($type, array('barcode', 'label', 'membercard', 'freeloan'))) {
+if (!in_array($type, array('freeloan'))) {
   $type = 'barcode';
 }
 
 // include printed settings configuration file
-include SB.'admin'.DS.'admin_template'.DS.'printed_settings.inc.php';
-// check for custom template settings
-$custom_settings = SB.'admin'.DS.$sysconf['admin_template']['dir'].DS.$sysconf['template']['theme'].DS.'printed_settings.inc.php';
-if (file_exists($custom_settings)) {
-  include $custom_settings;
-}
+include MDLBS.'membership/fll/printed_settings.inc.php';
 
 // create form instance
 $form = new simbio_form_table_AJAX('mainForm', $_SERVER['PHP_SELF'], 'post');
