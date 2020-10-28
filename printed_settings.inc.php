@@ -52,7 +52,7 @@ $sysconf['print']['freeloan']['institute'] = '';
 $sysconf['print']['freeloan']['period'] = '';
 $sysconf['print']['freeloan']['year'] = date("Y");
 // Head Library Signature
-$sysconf['print']['freeloan']['city'] = "Purwokertp";
+$sysconf['print']['freeloan']['city'] = "Purwokerto";
 $sysconf['print']['freeloan']['division_of_signature'] = 'Kepala Perpustakaan';
 $sysconf['print']['freeloan']['name_of_signature'] = 'Sugeng Ndalu';
 $sysconf['print']['freeloan']['id_of_signature'] = 'NIK. 216333';
