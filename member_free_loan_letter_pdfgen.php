@@ -98,7 +98,7 @@ foreach ($chunked_card_arrays as $membercard_rows) {
 		/* Add page*/
 		$pdf->AddPage();
 		/* Header */
-		$pdf->Image(MDLBS.'membership/fll/freeloan/'.$sysconf['print']['freeloan']['logo_surat'], 27, 10,-180);
+		$pdf->Image(MDLBS.'membership'.DS.'fll'.DS.'freeloan'.DS.$sysconf['print']['freeloan']['logo_surat'], 27, 10,-180);
 		$pdf->Ln(35);
 		$pdf->SetFont('Arial','U',14);
 		$pdf->Cell(190,3, $sysconf['print']['freeloan']['caption_letter'],0,1,'C');
