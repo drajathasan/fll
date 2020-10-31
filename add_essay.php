@@ -143,8 +143,8 @@ if (isset($_GET['keywords']) AND $_GET['keywords']) {
 
     // Update Data
     if (isset($_POST['saveData']) AND $can_read AND $can_write) {
-        $memberID = trim($_POST['memberID']);
-    	$memberEssay = trim($_POST['memberEssay']);
+        $memberID = trim($dbs->escape_string($_POST['memberID']));
+    	$memberEssay = trim($dbs->escape_string($_POST['memberEssay']));
         if (empty($memberEssay)) {
             utility::jsAlert(__('Judul skripsi tidak  boleh kosong!'));
             exit();
@@ -157,7 +157,7 @@ if (isset($_GET['keywords']) AND $_GET['keywords']) {
     }
     exit();
     } else {
-      print('<div class="infoBox"><font style="color: #f00">Tidak ditemukan Id Anggota dengan nomor&nbsp; : '.$_GET['keywords'].'</font></div>');
+      print('<div class="infoBox"><font style="color: #f00">Tidak ditemukan Id Anggota dengan nomor&nbsp; : '.str_replace(['\'', '"'], '', strip_tags($_GET['keywords'])).'</font></div>');
     }
 } else {
   echo '<div class="infoBox"><font style="color: #f00">Masukan ID Anggota pada kotak pencarian, untuk menambahkan data</font></div>';
